@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This repository contains a single bash script (`summarize-merges.sh`) that analyzes merge commit activity across multiple Git repositories in subdirectories. The script scans all subdirectories for Git repositories, pulls the latest changes, and generates statistics about merge commits by author over a specified time period.
+This repository contains a single bash script (`summarize-merges.sh`) that analyzes merge commit activity and overall commit patterns across multiple Git repositories in subdirectories. The script scans all subdirectories for Git repositories, pulls the latest changes, and generates statistics about merge commits by author and commit-to-merge ratios over a specified time period.
 
 ## Usage
 
@@ -18,10 +18,10 @@ This repository contains a single bash script (`summarize-merges.sh`) that analy
 The script is executable and supports an optional verbose flag. It will:
 1. Scan all subdirectories for Git repositories
 2. Pull latest changes from each repository
-3. Collect merge commit data from the past month
-4. Generate summary statistics by author
+3. Collect merge commit and total commit data from the past month
+4. Generate summary statistics by author and commit-to-merge ratios
 
-In verbose mode (`-v` or `--verbose`), the script displays merge commit counts for each directory as it processes them, helping verify that data is being collected correctly.
+In verbose mode (`-v` or `--verbose`), the script displays merge commit counts and total commit counts for each directory as it processes them, helping verify that data is being collected correctly.
 
 ### Configuration
 The time period can be modified by changing the `SINCE` variable at the top of the script:
@@ -43,9 +43,9 @@ If the file exists, the script will replace all occurrences of the alias names w
 
 The script operates in a simple linear fashion:
 1. **Discovery Phase**: Loops through all subdirectories looking for `.git` directories
-2. **Data Collection Phase**: For each Git repository, pulls updates and extracts merge commit author names
-3. **Analysis Phase**: Aggregates data using standard Unix tools (sort, uniq, wc) to generate statistics
-4. **Output Phase**: Displays ranked list of contributors and summary statistics
+2. **Data Collection Phase**: For each Git repository, pulls updates and extracts merge commit author names and total commit counts
+3. **Analysis Phase**: Aggregates data using standard Unix tools (sort, uniq, wc, awk) to generate statistics
+4. **Output Phase**: Displays ranked list of contributors, summary statistics, and commit-to-merge ratios
 
 ## Dependencies
 
