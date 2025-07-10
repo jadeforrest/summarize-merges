@@ -25,6 +25,16 @@ The time period can be modified by changing the `SINCE` variable at the top of t
 SINCE="1 month ago"  # Can be changed to "2 weeks ago", "3 months ago", etc.
 ```
 
+### Author Aliases
+The script supports author name normalization through an optional `git-author-aliases.txt` file. This file should contain comma-separated pairs of alias and canonical names, one per line:
+```
+jeremy,Jeremy Smith
+j.smith,Jeremy Smith
+jdoe,John Doe
+```
+
+If the file exists, the script will replace all occurrences of the alias names with their canonical equivalents before generating statistics. If the file doesn't exist, the script continues without errors.
+
 ## Architecture
 
 The script operates in a simple linear fashion:
