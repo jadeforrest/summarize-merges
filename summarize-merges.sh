@@ -3,6 +3,12 @@
 # How far back to look
 SINCE="1 month ago"
 
+# Parse command line arguments
+VERBOSE=false
+if [[ "$1" == "-v" || "$1" == "--verbose" ]]; then
+  VERBOSE=true
+fi
+
 # Temporary file to accumulate results
 TEMP_FILE=$(mktemp)
 ALIASES_FILE="git-author-aliases.txt"
@@ -19,7 +25,22 @@ for dir in */; do
     git pull > /dev/null
 
     # Collect author names for merge commits since given date
-    git log --merges --since="$SINCE" --pretty="%an" >> "$TEMP_FILE"
+    DIR_TEMP=$(mktemp)
+    git log --merges --since="$SINCE" --pretty="%an" > "$DIR_TEMP"
+    
+    if [ "$VERBOSE" = true ]; then
+      MERGE_COUNT=$(wc -l < "$DIR_TEMP")
+      if [ "$MERGE_COUNT" -gt 0 ]; then
+        echo "  Found $MERGE_COUNT merge commits:"
+        sort "$DIR_TEMP" | uniq -c | sort -nr | sed 's/^/    /'
+      else
+        echo "  No merge commits found"
+      fi
+    fi
+    
+    # Add to main temp file
+    cat "$DIR_TEMP" >> "$TEMP_FILE"
+    rm "$DIR_TEMP"
 
     cd - > /dev/null
   fi

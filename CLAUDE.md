@@ -10,14 +10,18 @@ This repository contains a single bash script (`summarize-merges.sh`) that analy
 
 ### Running the Script
 ```bash
-./summarize-merges.sh
+./summarize-merges.sh           # Basic usage
+./summarize-merges.sh -v        # Verbose mode
+./summarize-merges.sh --verbose # Verbose mode (alternative)
 ```
 
-The script is executable and requires no arguments. It will:
+The script is executable and supports an optional verbose flag. It will:
 1. Scan all subdirectories for Git repositories
 2. Pull latest changes from each repository
 3. Collect merge commit data from the past month
 4. Generate summary statistics by author
+
+In verbose mode (`-v` or `--verbose`), the script displays merge commit counts for each directory as it processes them, helping verify that data is being collected correctly.
 
 ### Configuration
 The time period can be modified by changing the `SINCE` variable at the top of the script:
