@@ -133,7 +133,6 @@ if [ -s "$CYCLE_TIMES_FILE" ]; then
     
     printf "Average cycle time:       %4.1f days (%5.1f hours)\n" "$AVERAGE_CYCLE_DAYS" "$AVERAGE_CYCLE_HOURS"
     printf "Median cycle time:        %4.1f days (%5.1f hours)\n" "$MEDIAN_CYCLE_DAYS" "$MEDIAN_CYCLE_HOURS"
-    printf "Cycle time samples:       %3d\n" "$CYCLE_COUNT"
   else
     printf "Average cycle time:       %s\n" "N/A"
   fi
