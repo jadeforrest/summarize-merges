@@ -28,14 +28,14 @@ for dir in */; do
 
     # Collect author names for merge commits since given date
     DIR_TEMP=$(mktemp)
-    git log --merges --since="$SINCE" --pretty="%an" > "$DIR_TEMP"
+    git log --all --merges --since="$SINCE" --pretty="%an" > "$DIR_TEMP"
     
     # Count total commits (not just merges) in the same time period
-    TOTAL_COMMITS=$(git log --since="$SINCE" --oneline | wc -l)
+    TOTAL_COMMITS=$(git log --all --since="$SINCE" --oneline | wc -l)
     echo "$TOTAL_COMMITS" >> "$COMMITS_FILE"
     
     # Collect cycle times for merge commits
-    git log --merges --since="$SINCE" --pretty="%H %ct" | while read -r merge_hash merge_time; do
+    git log --all --merges --since="$SINCE" --pretty="%H %ct" | while read -r merge_hash merge_time; do
       if [ -n "$merge_hash" ]; then
         # Get the oldest commit in the merged branch
         oldest_commit_time=$(git log --reverse --pretty="%ct" "${merge_hash}^1..${merge_hash}^2" 2>/dev/null | head -1)
