@@ -97,22 +97,22 @@ TOTAL_COMMITS=$(awk '{sum += $1} END {print sum}' "$COMMITS_FILE")
 echo
 echo "Summary:"
 echo "--------"
-echo "Total merge commits:      $TOTAL_MERGES"
-echo "Total commits:            $TOTAL_COMMITS"
-echo "Total unique contributors: $TOTAL_PEOPLE"
+printf "Total merge commits:      %3d\n" "$TOTAL_MERGES"
+printf "Total commits:            %3d\n" "$TOTAL_COMMITS"
+printf "Total unique contributors: %3d\n" "$TOTAL_PEOPLE"
 
 if [ "$TOTAL_PEOPLE" -gt 0 ]; then
   AVERAGE_MERGES=$(awk "BEGIN { printf \"%.2f\", $TOTAL_MERGES / $TOTAL_PEOPLE }")
-  echo "Average merges per person: $AVERAGE_MERGES"
+  printf "Average merges per person: %4.2f\n" "$AVERAGE_MERGES"
 else
-  echo "Average merges per person: N/A"
+  printf "Average merges per person: %4s\n" "N/A"
 fi
 
 if [ "$TOTAL_MERGES" -gt 0 ]; then
   COMMITS_PER_MERGE=$(awk "BEGIN { printf \"%.2f\", $TOTAL_COMMITS / $TOTAL_MERGES }")
-  echo "Average commits per merge: $COMMITS_PER_MERGE"
+  printf "Average commits per merge: %4.2f\n" "$COMMITS_PER_MERGE"
 else
-  echo "Average commits per merge: N/A"
+  printf "Average commits per merge: %4s\n" "N/A"
 fi
 
 # Calculate cycle time statistics
@@ -131,14 +131,14 @@ if [ -s "$CYCLE_TIMES_FILE" ]; then
     MEDIAN_CYCLE_DAYS=$(awk "BEGIN { printf \"%.1f\", $MEDIAN_CYCLE_SECONDS / 86400 }")
     MEDIAN_CYCLE_HOURS=$(awk "BEGIN { printf \"%.1f\", $MEDIAN_CYCLE_SECONDS / 3600 }")
     
-    echo "Average cycle time:       $AVERAGE_CYCLE_DAYS days ($AVERAGE_CYCLE_HOURS hours)"
-    echo "Median cycle time:        $MEDIAN_CYCLE_DAYS days ($MEDIAN_CYCLE_HOURS hours)"
-    echo "Cycle time samples:       $CYCLE_COUNT"
+    printf "Average cycle time:       %4.1f days (%5.1f hours)\n" "$AVERAGE_CYCLE_DAYS" "$AVERAGE_CYCLE_HOURS"
+    printf "Median cycle time:        %4.1f days (%5.1f hours)\n" "$MEDIAN_CYCLE_DAYS" "$MEDIAN_CYCLE_HOURS"
+    printf "Cycle time samples:       %3d\n" "$CYCLE_COUNT"
   else
-    echo "Average cycle time:       N/A"
+    printf "Average cycle time:       %s\n" "N/A"
   fi
 else
-  echo "Average cycle time:       N/A (no cycle time data collected)"
+  printf "Average cycle time:       %s\n" "N/A (no cycle time data collected)"
 fi
 
 # Cleanup
