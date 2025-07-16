@@ -86,8 +86,10 @@ if [ -f "$ALIASES_FILE" ]; then
   rm -f "$TEMP_FILE.bak"
 fi
 
-# Summarize and print
-sort "$TEMP_FILE" | uniq -c | sort -nr
+# Show detailed counts in verbose mode
+if [ "$VERBOSE" = true ]; then
+  sort "$TEMP_FILE" | uniq -c | sort -nr
+fi
 
 # Compute totals
 TOTAL_MERGES=$(wc -l < "$TEMP_FILE")
